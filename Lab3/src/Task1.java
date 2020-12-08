@@ -1,7 +1,7 @@
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Main {
+public class Task1 {
     public static void main(String[] args) {
         Store store = new Store();
         Producer producer = new Producer(store);
