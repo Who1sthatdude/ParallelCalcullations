@@ -83,6 +83,7 @@ public class Task4 extends Thread {
                             notCut = false;  //відвідувач залишає перукарню після завершення стрижки
                             this.haircut();
                         } catch (InterruptedException ex) {
+                            ex.printStackTrace();
                         }
                     } else {  //немає вільних місць
                         System.out.println("All seats are occupied " + this.iD + " has left");
@@ -90,6 +91,7 @@ public class Task4 extends Thread {
                         notCut = false; // відвідувач залишить перукарню через брак вільних місць
                     }
                 } catch (InterruptedException ex) {
+                    ex.printStackTrace();
                 }
             }
         }
