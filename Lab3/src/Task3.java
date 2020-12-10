@@ -88,7 +88,7 @@ public class Task3 {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String [] args) {
 
         ArrayList<Fork> forks = new ArrayList<>();
         ArrayList<Philosopher> philosophers = new ArrayList<>();
