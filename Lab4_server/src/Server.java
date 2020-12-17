@@ -1,33 +1,45 @@
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.*;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Server {
     public static void main(String[] args){
-        DatagramSocket sc = null;
-        try{
-            sc = new DatagramSocket(1234);
+        ServerSocket sc = null;
+        Socket scc = null;
+        BufferedReader bfr = null;
+        DataOutputStream dout = null;
+        try {
+            sc = new ServerSocket(3001);
 
-            while (true){
-                byte[] data = new byte[100];
-                DatagramPacket dp = new DatagramPacket(data, data.length);
+            scc = sc.accept();
 
-                sc.receive(dp);
-                String clientdata =  new String(dp.getData()).trim();
+            //Go into infinite loop unless client ask to quit
+            while(true){
+                bfr = new BufferedReader(new InputStreamReader(scc.getInputStream()));
+                String clientdata = bfr.readLine();
 
-                System.out.println("Message Client: " + clientdata);
+                if (clientdata.equals("quit")){
+                    break;
+                }
 
-
-                data = "Hey".getBytes();
-                sc.send(new DatagramPacket(data,data.length,dp.getAddress(),dp.getPort()));
+                System.out.println("Message from Client is: " + clientdata);
+                dout = new DataOutputStream(scc.getOutputStream());
+                dout.writeBytes("Hey Client" + "\n");
             }
-
-        } catch (SocketException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            sc.close();
+        } finally {
+            try {
+                sc.close();
+                scc.close();
+                bfr.close();
+                dout.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
